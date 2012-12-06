@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>html5 geolocation</title>
+<link href="css/html5.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<span id="support">请将下面的经纬度输入谷歌地图：</span>
+<div id="show">
+纬度：<span id="latitude"></span><br />
+经度：<span id="longitude"></span><br />
+准确度：<span id="accuracy"></span>
+</div>
+<script type="text/javascript">
+var doc = document,
+    latitude = doc.getElementById('latitude'),
+    longitude = doc.getElementById('longitude'),
+    accuracy = doc.getElementById('accuracy'),
+    support = doc.getElementById('support'),
+    showDiv = doc.getElementById('show');
+function lodeSupport(){
+    if(navigator.geolocation){
+        support.innerHTML = '同意共享地址，然后将下面的经纬度输入谷歌地图(纬度 经度)查看自己位置：';
+        showDiv.style.display = 'block';
+        navigator.geolocation.getCurrentPosition(updataPosition);
+    }else{
+        support.innerHTML = '垃圾浏览器不支持，赶快换吧！';
+        showDiv.style.display = 'none';
+    }
+}
+function updataPosition(position){
+    var latitudeP = position.coords.latitude,
+        longitudeP = position.coords.longitude,
+        accuracyP = position.coords.accuracy;
+    latitude.innerHTML = latitudeP;
+    longitude.innerHTML = longitudeP;
+    accuracy.innerHTML = accuracyP;
+}
+window.addEventListener('load', lodeSupport , true);
+</script>
+</body>
+</html>
